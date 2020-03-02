@@ -5,16 +5,27 @@ use Monolog\Handler\StreamHandler;
 ini_set('display_errors', '1');
 ini_set('display_startup_errors_errors', '1');
 error_reporting(E_ALL);
+use Monolog\Handler\BrowserConsoleHandler;
 
 use Monolog\Handler\FirePHPHandler;
 
 // create a log channel
 $log = new Logger('name');
-$log->pushHandler(new StreamHandler(__DIR__.'/debug.log', Logger::WARNING));
-$log->pushHandler(new FirePHPHandler());
-// add records to the log
+
+
+
+$log->pushHandler(new StreamHandler(__DIR__.'/warning.log', Logger::WARNING));
+$log->pushHandler(new BrowserConsoleHandler());// add records to the log
 $log->warning($_GET['message'] ?? "" ) ;
-$log->error('Bar');
+
+
+$log1 = new Logger('name');
+$log1->pushHandler(new StreamHandler(__DIR__.'/INFO.log', Logger::INFO));
+$log1->pushHandler(new BrowserConsoleHandler());
+// add records to the log
+$log1->info($_GET['message'] ?? "" ) ;
+
+
 ?>
 
 <!doctype html>
