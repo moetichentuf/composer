@@ -1,3 +1,21 @@
+<?php
+require_once 'vendor/autoload.php';
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+ini_set('display_errors', '1');
+ini_set('display_startup_errors_errors', '1');
+error_reporting(E_ALL);
+
+
+// create a log channel
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler(__DIR__.'/debug.log', Logger::WARNING));
+
+// add records to the log
+$log->warning('Foo');
+$log->error('Bar');
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
