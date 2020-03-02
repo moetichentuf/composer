@@ -6,13 +6,14 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors_errors', '1');
 error_reporting(E_ALL);
 
+use Monolog\Handler\FirePHPHandler;
 
 // create a log channel
 $log = new Logger('name');
 $log->pushHandler(new StreamHandler(__DIR__.'/debug.log', Logger::WARNING));
-
+$log->pushHandler(new FirePHPHandler());
 // add records to the log
-$log->warning('Foo');
+$log->warning($_GET['message'] ?? "" ) ;
 $log->error('Bar');
 ?>
 
