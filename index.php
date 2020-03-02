@@ -24,14 +24,39 @@ switch ($favcolor) {
         $log->debug($_GET['message'] ?? "");
         break;
     case "INFO":
-        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/info.log', Logger::INFO));
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/debug.log', Logger::INFO));
+        $log->warning($_GET['message'] ?? "");
+
+        break;
+    case "NOTICE":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/debug.log', Logger::NOTICE));
+        $log->warning($_GET['message'] ?? "");
+
+        break;
+    case "ERROR":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/warning.log', Logger::INFO));
         $log->info($_GET['message'] ?? "");
+
+        break;
+    case "CRITICAL":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/warning.log', Logger::CRITICAL));
+        $log->warning($_GET['message'] ?? "");
+
+        break;
+    case "ALERT":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/warning.log', Logger::ALERT));
+        $log->warning($_GET['message'] ?? "");
 
         break;
     case "WARNING":
         $log->pushHandler(new StreamHandler(__DIR__ . '/logs/warning.log', Logger::WARNING));
         $log->warning($_GET['message'] ?? "");
 
+        break;
+
+    case "EMERGENCY":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/emergency.log', Logger::INFO));
+        $log->emergency($_GET['message'] ?? "");
     default:
 
 }
