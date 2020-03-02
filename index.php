@@ -1,30 +1,41 @@
 <?php
+declare(strict_types=1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 require_once 'vendor/autoload.php';
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-ini_set('display_errors', '1');
-ini_set('display_startup_errors_errors', '1');
-error_reporting(E_ALL);
 use Monolog\Handler\BrowserConsoleHandler;
 
-use Monolog\Handler\FirePHPHandler;
 
 // create a log channel
-$log = new Logger('name');
+$log = new Logger('my_logger');
+$log->pushHandler(new BrowserConsoleHandler(Logger::DEBUG));
+$log->pushHandler(new StreamHandler(__DIR__ . '/logs/info.log', Logger::DEBUG));
 
+$log->info($_GET['message'] ?? "" ) ;
 
+$favcolor = $_GET['type'];
 
-$log->pushHandler(new StreamHandler(__DIR__.'/warning.log', Logger::WARNING));
-$log->pushHandler(new BrowserConsoleHandler());// add records to the log
-$log->warning($_GET['message'] ?? "" ) ;
+switch ($favcolor) {
+    case "DEBUG":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/debug.log', Logger::DEBUG));
+        $log->debug($_GET['message'] ?? "");
+        break;
+    case "INFO":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/info.log', Logger::INFO));
+        $log->info($_GET['message'] ?? "");
 
+        break;
+    case "WARNING":
+        $log->pushHandler(new StreamHandler(__DIR__ . '/logs/warning.log', Logger::WARNING));
+        $log->warning($_GET['message'] ?? "");
 
-$log1 = new Logger('name');
-$log1->pushHandler(new StreamHandler(__DIR__.'/INFO.log', Logger::INFO));
-$log1->pushHandler(new BrowserConsoleHandler());
-// add records to the log
-$log1->info($_GET['message'] ?? "" ) ;
+    default:
 
+}
 
 ?>
 
