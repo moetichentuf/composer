@@ -12,8 +12,7 @@ use Monolog\Handler\BrowserConsoleHandler;
 
 // create a log channel
 $log = new Logger('my_logger');
-$log->pushHandler(new BrowserConsoleHandler(Logger::DEBUG));
-$log->pushHandler(new StreamHandler(__DIR__ . '/logs/info.log', Logger::DEBUG));
+
 
 $log->info($_GET['message'] ?? "" ) ;
 
